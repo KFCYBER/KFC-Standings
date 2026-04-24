@@ -363,9 +363,12 @@ function parseRecords(rows) {
   for (let i = 6; i < rows.length; i++) {
     const row    = rows[i];
     const name   = (row[1] ?? '').trim();
+    const status = (row[5] ?? '').trim();
     const rawBal = (row[3] ?? '').trim();
 
     if (!name) continue;
+    // Only include rows explicitly marked Active — filters out stake table, tax table, etc.
+    if (status !== 'Active') continue;
     if (!rawBal || rawBal === '0' || rawBal === '-' || rawBal.startsWith('#')) continue;
 
     const balance = parseFloat(rawBal.replace(/,/g, ''));
