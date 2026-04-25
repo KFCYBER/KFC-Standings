@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KFC · League Standings · Season 3</title>
+  <title>KFC · Player Standings · Season 3</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -42,7 +42,21 @@
       backdrop-filter: blur(8px);
     }
 
-    .header-logo { height: 72px; width: auto; mix-blend-mode: screen; }
+    @keyframes logo-float {
+      0%, 100% {
+        transform: translateY(0px);
+        filter: drop-shadow(0 0 8px rgba(201,168,76,0.35)) brightness(1);
+      }
+      50% {
+        transform: translateY(-5px);
+        filter: drop-shadow(0 0 20px rgba(201,168,76,0.75)) brightness(1.06);
+      }
+    }
+
+    .header-logo {
+      height: 72px; width: auto; mix-blend-mode: screen;
+      animation: logo-float 3.2s ease-in-out infinite;
+    }
     .header-center { text-align: center; }
     .header-center h1 {
       font-size: 24px; font-weight: 800;
@@ -366,8 +380,8 @@
 <header>
   <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
   <div class="header-center">
-    <h1>League Standings</h1>
-    <p>Season 3 · 2026 · Blackjack</p>
+    <h1>Player Standings</h1>
+    <p id="header-subtitle">Golden Aces League</p>
   </div>
   <div class="header-spacer"></div>
 </header>
@@ -502,6 +516,8 @@ const SEASON = {
   TARGET:        250_000_000_000,
   TARGET_LABEL:  '250B',
   CONTENDER_MIN: 10_000_000_000,
+  START:         new Date('2026-04-25'),  // ★ Season start date
+  END:           new Date('2026-12-31'),  // ★ Season end date
 };
 
 /* ════════════════════════════════════════════════════════
@@ -1021,6 +1037,22 @@ async function refresh() {
   }
 }
 
+/* ════════════════════════════════════════════════════════
+   HEADER SUBTITLE — days remaining, updates on load
+   ════════════════════════════════════════════════════════ */
+function updateHeaderSubtitle() {
+  const now      = new Date();
+  const msLeft   = SEASON.END - now;
+  const daysLeft = Math.max(0, Math.ceil(msLeft / 86_400_000));
+  let   daysTxt;
+  if      (daysLeft === 0) daysTxt = 'Final Day';
+  else if (daysLeft === 1) daysTxt = '1 day remaining';
+  else                     daysTxt = `${daysLeft} days remaining`;
+  document.getElementById('header-subtitle').textContent =
+    `Season ${SEASON.NUMBER}  ·  ${daysTxt}  ·  Golden Aces League`;
+}
+
+updateHeaderSubtitle();
 refresh();
 </script>
 
