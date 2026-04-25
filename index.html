@@ -42,46 +42,16 @@
       backdrop-filter: blur(8px);
     }
 
-    /* Logo animation — glow lives on a pseudo-element so filter never
-       touches the <img>, keeping mix-blend-mode: screen intact         */
-    @keyframes logo-float {
-      0%, 100% { transform: translateY(0px); }
-      50%       { transform: translateY(-5px); }
-    }
-
-    @keyframes logo-glow {
-      0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(0.85); }
-      50%       { opacity: 0.80; transform: translate(-50%, -50%) scale(1.20); }
-    }
-
-    .header-logo-wrap {
-      position: relative;
-      display: inline-block;
-      animation: logo-float 3.2s ease-in-out infinite;
-    }
-
-    /* Glow ring — sits behind the image, completely separate compositing */
-    .header-logo-wrap::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      background: radial-gradient(circle,
-        rgba(201,168,76,0.65) 0%,
-        rgba(201,168,76,0.15) 50%,
-        transparent 72%);
-      animation: logo-glow 3.2s ease-in-out infinite;
-      pointer-events: none;
-      z-index: 0;
+    /* Logo animation — spin + float combined in a single transform keyframe. */
+    @keyframes logo-spin-float {
+      0%   { transform: translateY(0px)  rotate(0deg); }
+      50%  { transform: translateY(-8px) rotate(180deg); }
+      100% { transform: translateY(0px)  rotate(360deg); }
     }
 
     .header-logo {
       height: 72px; width: auto;
-      mix-blend-mode: screen;  /* no filter here — keeps black bg invisible */
-      position: relative;
-      z-index: 1;
-      display: block;
+      animation: logo-spin-float 4s ease-in-out infinite;
     }
     .header-center { text-align: center; }
     .header-center h1 {
@@ -404,9 +374,7 @@
 
 <!-- ══════════════════════════════════════════ HEADER -->
 <header>
-  <div class="header-logo-wrap">
-    <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
-  </div>
+  <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
   <div class="header-center">
     <h1>Player Standings</h1>
     <p id="header-subtitle">Golden Aces League</p>
@@ -544,8 +512,8 @@ const SEASON = {
   TARGET:        250_000_000_000,
   TARGET_LABEL:  '250B',
   CONTENDER_MIN: 10_000_000_000,
-  START:         new Date('2026-04-25'),  // ★ Season start date
-  END:           new Date('2026-05-13'),  // ★ Season end date
+  START:         new Date('2026-04-25'),  // ★ Metadata only — NOT used in any display calculation
+  END:           new Date('2026-12-31'),  // ★ THIS is the only variable that controls "X days remaining" in the header
 };
 
 /* ════════════════════════════════════════════════════════
