@@ -32,7 +32,7 @@
     header {
       background: linear-gradient(180deg, #0c0c1c 0%, var(--bg) 100%);
       border-bottom: 1px solid var(--gold-dim);
-      padding: 26px 48px;
+      padding: 16px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -42,12 +42,10 @@
       backdrop-filter: blur(8px);
     }
 
-    .logo {
-      font-size: 20px;
-      font-weight: 900;
-      letter-spacing: 6px;
-      color: var(--gold);
-      text-shadow: 0 0 28px rgba(201,168,76,0.45);
+    .header-logo {
+      height: 72px;
+      width: auto;
+      mix-blend-mode: screen; /* makes the black logo background transparent */
     }
 
     .header-center { text-align: center; }
@@ -68,15 +66,207 @@
       text-transform: uppercase;
     }
 
-    .badge {
-      background: var(--red);
-      color: #fff;
-      font-size: 9px;
+    /* spacer to balance the logo on the right */
+    .header-spacer { width: 72px; }
+
+    /* ── CRUCICON BANNER ── */
+    #crucicon-banner {
+      width: 100%;
+      background: var(--crucicon-bg, rgba(59,189,111,0.07));
+      border-bottom: 2px solid var(--crucicon-color, #3bbd6f);
+      transition: background 0.6s ease, border-color 0.6s ease;
+    }
+
+    .crucicon-bar {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .crucicon-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      min-width: 64px;
+    }
+
+    .crucicon-tag {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--crucicon-color, #3bbd6f);
+      opacity: 0.65;
+      text-transform: uppercase;
+    }
+
+    .crucicon-num {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--crucicon-color, #3bbd6f);
+      text-shadow: 0 0 24px var(--crucicon-color, #3bbd6f);
+      line-height: 1;
+      transition: color 0.6s, text-shadow 0.6s;
+    }
+
+    .crucicon-sep {
+      width: 1px;
+      height: 40px;
+      background: var(--crucicon-color, #3bbd6f);
+      opacity: 0.2;
+      flex-shrink: 0;
+    }
+
+    .crucicon-info { flex: 1; }
+
+    .crucicon-status-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--crucicon-color, #3bbd6f);
+      text-transform: uppercase;
+      transition: color 0.6s;
+    }
+
+    .crucicon-desc {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* 5-dot intensity indicator */
+    .crucicon-dots {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .crucicon-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 1px solid var(--muted);
+      transition: background 0.6s, box-shadow 0.6s, border-color 0.6s;
+    }
+
+    .crucicon-dot.lit {
+      background: var(--crucicon-color, #3bbd6f);
+      border-color: var(--crucicon-color, #3bbd6f);
+      box-shadow: 0 0 8px var(--crucicon-color, #3bbd6f);
+    }
+
+    /* Crucible Regime toggle button */
+    .regime-btn {
+      background: transparent;
+      border: 1px solid var(--crucicon-color, #e04040);
+      color: var(--crucicon-color, #e04040);
+      font-size: 8px;
       font-weight: 700;
       letter-spacing: 2px;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border-radius: 4px;
+      cursor: pointer;
       text-transform: uppercase;
+      white-space: nowrap;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .regime-btn:hover { background: rgba(255,255,255,0.04); }
+
+    .regime-chevron {
+      font-size: 10px;
+      transition: transform 0.3s;
+    }
+
+    .regime-chevron.open { transform: rotate(180deg); }
+
+    /* Collapsible rules panel */
+    #regime-panel {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease;
+      border-top: 0px solid var(--border);
+    }
+
+    #regime-panel.open {
+      max-height: 600px;
+      border-top: 1px solid var(--border);
+    }
+
+    .regime-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px 24px 24px;
+    }
+
+    .regime-header {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--crucicon-color, #e04040);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .regime-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--crucicon-color, #e04040), transparent);
+      opacity: 0.3;
+    }
+
+    .regime-contenders {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .contender-chip {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--crucicon-color, #e04040);
+      color: var(--crucicon-color, #e04040);
+      background: rgba(224,64,64,0.08);
+    }
+
+    .regime-rules-list { list-style: none; }
+
+    .regime-rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .regime-rule-item:last-child { border-bottom: none; }
+
+    .rule-num {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--crucicon-color, #e04040);
+      min-width: 22px;
+      padding-top: 2px;
     }
 
     /* ── LAYOUT ── */
@@ -115,10 +305,7 @@
     }
 
     /* ── TABLE ── */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    table { width: 100%; border-collapse: collapse; }
 
     thead tr {
       background: rgba(201,168,76,0.07);
@@ -138,10 +325,12 @@
       border-bottom: 1px solid var(--border);
       transition: background 0.15s;
     }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover      { background: rgba(255,255,255,0.02); }
+    tbody tr:last-child  { border-bottom: none; }
+    tbody tr:hover       { background: rgba(255,255,255,0.02); }
+    tbody tr.contender   { background: rgba(224,64,64,0.04); }
+    tbody tr.contender:hover { background: rgba(224,64,64,0.07); }
 
-    td { padding: 18px 24px; }
+    td { padding: 16px 24px; }
 
     .td-rank {
       width: 72px;
@@ -154,7 +343,24 @@
     .td-rank.silver { color: #C0C0C0; }
     .td-rank.bronze { color: #CD7F32; }
 
-    .td-player { font-weight: 600; font-size: 15px; }
+    .td-player {
+      font-weight: 600;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contender-tag {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      border: 1px solid #e04040;
+      color: #e04040;
+      text-transform: uppercase;
+    }
 
     .td-balance {
       text-align: right;
@@ -192,11 +398,7 @@
     }
 
     /* ── CHART GRID ── */
-    .chart-grid {
-      display: grid;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
+    .chart-grid { display: grid; gap: 20px; margin-bottom: 20px; }
     .chart-grid.cols-2 { grid-template-columns: 1fr 1fr; }
 
     .chart-card {
@@ -239,24 +441,80 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 800px) {
-      header { padding: 18px 20px; flex-wrap: wrap; gap: 10px; }
+      header { padding: 14px 20px; }
+      .header-logo { height: 52px; }
       .header-center h1 { font-size: 17px; letter-spacing: 4px; }
       .chart-grid.cols-2 { grid-template-columns: 1fr; }
       main { padding: 28px 14px 48px; }
+      .crucicon-bar { flex-wrap: wrap; gap: 12px; }
     }
   </style>
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════════ -->
 <header>
-  <div class="logo">KFC</div>
+  <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
   <div class="header-center">
     <h1>League Standings</h1>
-    <p>Kimmo's Fabulous Casino · Season 3 · Blackjack</p>
+    <p>Season 3 · 2026 · Blackjack</p>
   </div>
-  <div class="badge">Private · Restricted</div>
+  <div class="header-spacer"></div>
 </header>
 
+<!-- ═══════════════════════════════════════════════════
+     CRUCICON BANNER — non-dismissable, always visible
+════════════════════════════════════════════════════ -->
+<div id="crucicon-banner">
+  <div class="crucicon-bar">
+
+    <!-- Level badge -->
+    <div class="crucicon-badge">
+      <span class="crucicon-tag">Crucicon</span>
+      <span class="crucicon-num" id="cn-num">—</span>
+    </div>
+
+    <div class="crucicon-sep"></div>
+
+    <!-- Status text -->
+    <div class="crucicon-info">
+      <div class="crucicon-status-label" id="cn-status">Loading…</div>
+      <div class="crucicon-desc" id="cn-desc"></div>
+    </div>
+
+    <!-- 5-dot intensity meter (right-aligned) -->
+    <div class="crucicon-dots" id="cn-dots">
+      <div class="crucicon-dot" id="dot-1"></div>
+      <div class="crucicon-dot" id="dot-2"></div>
+      <div class="crucicon-dot" id="dot-3"></div>
+      <div class="crucicon-dot" id="dot-4"></div>
+      <div class="crucicon-dot" id="dot-5"></div>
+    </div>
+
+    <!-- Crucible Regime toggle — only visible at Crucicon 1 -->
+    <button class="regime-btn" id="regime-btn" onclick="toggleRegime()" style="display:none">
+      Crucible Regime
+      <span class="regime-chevron" id="regime-chevron">▼</span>
+    </button>
+
+  </div>
+
+  <!-- Collapsible rules panel -->
+  <div id="regime-panel">
+    <div class="regime-inner">
+      <div class="regime-header">Active Contenders</div>
+      <div class="regime-contenders" id="regime-contenders"></div>
+      <div class="regime-header">Crucible Regime Rules</div>
+      <ul class="regime-rules-list" id="regime-rules"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════ -->
 <main>
 
   <!-- STANDINGS TABLE -->
@@ -313,20 +571,89 @@
 </footer>
 
 <script>
-/* ================================================================
-   CONFIG
-   Only one value to fill in — your Cloudflare Worker URL.
-   No API keys or Sheet IDs live here. Those stay in Cloudflare.
-   ================================================================ */
+/* ════════════════════════════════════════════════════════════════
+   ★  SEASON CONFIG — edit these each season
+   ════════════════════════════════════════════════════════════════ */
+const SEASON = {
+  NUMBER:        3,
+  TARGET:        250_000_000_000,   // Season title target balance (250B for S3)
+  TARGET_LABEL:  '250B',
+  CONTENDER_MIN: 10_000_000_000,    // Min balance to be a Contender (10B)
+};
+
+/* ════════════════════════════════════════════════════════════════
+   ★  CRUCICON LEVELS — thresholds based on the leader's balance
+      Ordered 5 → 1 (calm → intense)
+   ════════════════════════════════════════════════════════════════ */
+const CRUCICON = [
+  {
+    level:  5,
+    status: 'Open Play',
+    min:    0,
+    max:    100_000,
+    color:  '#3bbd6f',
+    bg:     'rgba(59,189,111,0.07)',
+    desc:   'Season start · first make-or-break gate',
+  },
+  {
+    level:  4,
+    status: 'Ladder Play',
+    min:    100_000,
+    max:    1_000_000,
+    color:  '#36A2EB',
+    bg:     'rgba(54,162,235,0.07)',
+    desc:   'Climbing standard stakes · entering VIP',
+  },
+  {
+    level:  3,
+    status: 'Serious Play',
+    min:    1_000_000,
+    max:    100_000_000,
+    color:  '#FFCE56',
+    bg:     'rgba(255,206,86,0.07)',
+    desc:   'First players to enter VIP stakes · second floor',
+  },
+  {
+    level:  2,
+    status: 'Contending Play',
+    min:    100_000_000,
+    max:    10_000_000_000,
+    color:  '#FF9F40',
+    bg:     'rgba(255,159,64,0.07)',
+    desc:   'Last stage before the big leagues',
+  },
+  {
+    level:  1,
+    status: 'Endgame',
+    min:    10_000_000_000,
+    max:    250_000_000_000,
+    color:  '#e04040',
+    bg:     'rgba(224,64,64,0.10)',
+    desc:   `Crucible Regime in effect · title target ${SEASON.TARGET_LABEL}`,
+  },
+];
+
+/* ════════════════════════════════════════════════════════════════
+   ★  CRUCIBLE REGIME RULES — shown when Crucicon 1 is active
+      Add, remove or edit lines freely
+   ════════════════════════════════════════════════════════════════ */
+const CRUCIBLE_RULES = [
+  'All contenders must register a minimum of 2 sessions per calendar week.',
+  'A contender may not decline a direct challenge issued by another contender.',
+  'Minimum buy-in floor for all contender sessions is raised to Legendary tier.',
+  'Any contender absent for 7+ consecutive days is subject to a balance penalty.',
+];
+
+/* ════════════════════════════════════════════════════════════════
+   WORKER CONFIG
+   ════════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  // Paste your Worker URL here after deploying to Cloudflare.
-  // It will look like: https://kfc-proxy.YOUR-NAME.workers.dev
   WORKER_URL: 'https://kfc-proxy.kfcstaffco.workers.dev',
 };
 
-/* ================================================================
-   COLOURS — one per player slot in order of appearance
-   ================================================================ */
+/* ════════════════════════════════════════════════════════════════
+   PLAYER COLOURS — one per slot, in appearance order
+   ════════════════════════════════════════════════════════════════ */
 const COLORS = [
   '#FF6384','#36A2EB','#FFCE56','#4BC0C0',
   '#9966FF','#FF9F40','#00E676','#FF4081',
@@ -334,32 +661,22 @@ const COLORS = [
   '#F06292','#AED581','#80CBC4','#FFAB40',
 ];
 
-/* ================================================================
-   WORKER FETCH — all secrets stay in Cloudflare, never here
-   ================================================================ */
+/* ════════════════════════════════════════════════════════════════
+   WORKER FETCH
+   ════════════════════════════════════════════════════════════════ */
 async function sheetsGet(tab) {
-  const url = `${CONFIG.WORKER_URL}?tab=${tab}`;
-  const res = await fetch(url);
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Worker ${res.status} — ${body}`);
-  }
+  const res = await fetch(`${CONFIG.WORKER_URL}?tab=${tab}`);
+  if (!res.ok) throw new Error(`Worker ${res.status} — ${await res.text()}`);
   return (await res.json()).values ?? [];
 }
 
-/* ================================================================
+/* ════════════════════════════════════════════════════════════════
    PARSE — Player Records (Tab 2)
-
-   Sheet layout (1-indexed):
-     Row 6  → header: [empty, Player, Times Visited, Current Balance, …]
-     Row 7+ → player data
-
-   Returns [{name, balance}] sorted descending by balance.
-   Skips rows with no name, zero balance, dashes, or formula errors.
-   ================================================================ */
+   Row 6 = header, Row 7+ = data
+   Cols: [empty, Player, TimesVisited, CurrentBalance, Stake, Status, Tax%, TaxAmt]
+   ════════════════════════════════════════════════════════════════ */
 function parseRecords(rows) {
   const players = [];
-  // rows is 0-indexed; row index 6 = sheet row 7 (first data row)
   for (let i = 6; i < rows.length; i++) {
     const row    = rows[i];
     const name   = (row[1] ?? '').trim();
@@ -367,8 +684,7 @@ function parseRecords(rows) {
     const rawBal = (row[3] ?? '').trim();
 
     if (!name) continue;
-    // Only include rows explicitly marked Active — filters out stake table, tax table, etc.
-    if (status !== 'Active') continue;
+    if (status !== 'Active') continue; // filters stake table, tax table, etc.
     if (!rawBal || rawBal === '0' || rawBal === '-' || rawBal.startsWith('#')) continue;
 
     const balance = parseFloat(rawBal.replace(/,/g, ''));
@@ -376,61 +692,46 @@ function parseRecords(rows) {
 
     players.push({ name, balance });
   }
-
   players.sort((a, b) => b.balance - a.balance);
   return players;
 }
 
-/* ================================================================
+/* ════════════════════════════════════════════════════════════════
    PARSE — Player Transactions (Tab 1)
-
-   Sheet layout (1-indexed):
-     Row 5  → player names at cols B, N, Z… (every 12 cols, 1-indexed)
-     Row 7+ → game data
-
-   Each 12-column block (offset from block start col, 0-indexed):
-     +0 Date  +1 Game#  +2 Stake  +3 Type
-     +4 Beg.Bal  +5 Buy-in  +6 Cash-in  +7 Ending Balance  …
-
-   Returns { playerName: [{game, balance}] }
-   ================================================================ */
+   Row 5 = player names, Row 7+ = game data
+   Block of 12 cols per player: +0 Date, +1 Game#, +7 EndingBalance
+   ════════════════════════════════════════════════════════════════ */
 function parseTransactions(rows) {
-  const BLOCK   = 12;           // 11 data cols + 1 empty separator
-  const nameRow = rows[4] ?? []; // row 5 = index 4
+  const BLOCK   = 12;
+  const nameRow = rows[4] ?? [];
+  const result  = {};
 
-  const result = {};
-
-  for (let colStart = 1; colStart < nameRow.length; colStart += BLOCK) {
-    const playerName = (nameRow[colStart] ?? '').trim();
-    if (!playerName) continue;
+  for (let col = 1; col < nameRow.length; col += BLOCK) {
+    const name = (nameRow[col] ?? '').trim();
+    if (!name) continue;
 
     const series = [];
     for (let r = 6; r < rows.length; r++) {
       const row    = rows[r];
-      const gameRaw = (row[colStart + 1] ?? '').trim();
-      const balRaw  = (row[colStart + 7] ?? '').trim();
-
+      const gameRaw = (row[col + 1] ?? '').trim();
+      const balRaw  = (row[col + 7] ?? '').trim();
       if (!gameRaw || !balRaw || balRaw === '-' || balRaw.startsWith('#')) continue;
-
       const game    = parseInt(gameRaw, 10);
       const balance = parseFloat(balRaw.replace(/,/g, ''));
       if (!isFinite(game) || !isFinite(balance)) continue;
-
       series.push({ game, balance });
     }
-
     if (series.length > 0) {
       series.sort((a, b) => a.game - b.game);
-      result[playerName] = series;
+      result[name] = series;
     }
   }
-
   return result;
 }
 
-/* ================================================================
+/* ════════════════════════════════════════════════════════════════
    FORMAT — abbreviate large numbers
-   ================================================================ */
+   ════════════════════════════════════════════════════════════════ */
 function fmt(n) {
   if (n >= 1e12) return (n / 1e12).toFixed(2) + 'T';
   if (n >= 1e9)  return (n / 1e9).toFixed(2) + 'B';
@@ -439,9 +740,80 @@ function fmt(n) {
   return n.toLocaleString();
 }
 
-/* ================================================================
+/* ════════════════════════════════════════════════════════════════
+   CRUCICON — resolve current level from leader's balance
+   ════════════════════════════════════════════════════════════════ */
+function resolveCrucicon(leaderBalance) {
+  // Walk from most intense (level 1) to calmest (level 5)
+  const sorted = [...CRUCICON].sort((a, b) => a.level - b.level);
+  for (const lvl of sorted) {
+    if (leaderBalance >= lvl.min) return lvl;
+  }
+  return CRUCICON.find(l => l.level === 5);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RENDER — crucicon banner
+   ════════════════════════════════════════════════════════════════ */
+function renderCrucicon(players) {
+  const leaderBal = players[0]?.balance ?? 0;
+  const lvl       = resolveCrucicon(leaderBal);
+
+  // Apply CSS variables to the banner
+  const banner = document.getElementById('crucicon-banner');
+  banner.style.setProperty('--crucicon-color', lvl.color);
+  banner.style.setProperty('--crucicon-bg',    lvl.bg);
+
+  // Level number + text
+  document.getElementById('cn-num').textContent    = lvl.level;
+  document.getElementById('cn-status').textContent = lvl.status.toUpperCase();
+  document.getElementById('cn-desc').textContent   = lvl.desc;
+
+  // Intensity dots: dots lit = 6 - level  (level 1 → 5 dots, level 5 → 1 dot)
+  const litCount = 6 - lvl.level;
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.classList.toggle('lit', i <= litCount);
+    dot.style.setProperty('--crucicon-color', lvl.color);
+  }
+
+  // Crucible Regime — only at level 1
+  const btn = document.getElementById('regime-btn');
+  if (lvl.level === 1) {
+    btn.style.display = '';
+
+    // Contenders
+    const contenders = players.filter(p => p.balance >= SEASON.CONTENDER_MIN);
+    document.getElementById('regime-contenders').innerHTML =
+      contenders.length
+        ? contenders.map(p => `<span class="contender-chip">${p.name}</span>`).join('')
+        : '<span style="color:var(--muted);font-size:12px;letter-spacing:1px">No contenders yet</span>';
+
+    // Rules
+    document.getElementById('regime-rules').innerHTML =
+      CRUCIBLE_RULES.map((rule, i) => `
+        <li class="regime-rule-item">
+          <span class="rule-num">${String(i + 1).padStart(2, '0')}</span>
+          <span>${rule}</span>
+        </li>`).join('');
+  } else {
+    btn.style.display = 'none';
+    document.getElementById('regime-panel').classList.remove('open');
+    document.getElementById('regime-chevron').classList.remove('open');
+  }
+}
+
+/* Toggle Crucible Regime panel */
+function toggleRegime() {
+  const panel   = document.getElementById('regime-panel');
+  const chevron = document.getElementById('regime-chevron');
+  const isOpen  = panel.classList.toggle('open');
+  chevron.classList.toggle('open', isOpen);
+}
+
+/* ════════════════════════════════════════════════════════════════
    RENDER — standings table
-   ================================================================ */
+   ════════════════════════════════════════════════════════════════ */
 function renderTable(players) {
   if (!players.length) {
     document.getElementById('standings-wrap').innerHTML =
@@ -449,13 +821,20 @@ function renderTable(players) {
     return;
   }
 
-  const rankClass  = ['gold', 'silver', 'bronze'];
-  const rows = players.map((p, i) => `
-    <tr>
-      <td class="td-rank ${rankClass[i] ?? ''}">#${i + 1}</td>
-      <td class="td-player">${p.name}</td>
-      <td class="td-balance">${fmt(p.balance)}</td>
-    </tr>`).join('');
+  const rankClass = ['gold', 'silver', 'bronze'];
+
+  const rows = players.map((p, i) => {
+    const isContender = p.balance >= SEASON.CONTENDER_MIN;
+    const contenderTag = isContender
+      ? '<span class="contender-tag">Contender</span>'
+      : '';
+    return `
+      <tr class="${isContender ? 'contender' : ''}">
+        <td class="td-rank ${rankClass[i] ?? ''}">#${i + 1}</td>
+        <td class="td-player">${p.name}${contenderTag}</td>
+        <td class="td-balance">${fmt(p.balance)}</td>
+      </tr>`;
+  }).join('');
 
   document.getElementById('standings-wrap').innerHTML = `
     <table>
@@ -470,39 +849,28 @@ function renderTable(players) {
     </table>`;
 }
 
-/* ================================================================
-   CHART REGISTRY — track instances so we can destroy before re-render
-   ================================================================ */
+/* ════════════════════════════════════════════════════════════════
+   CHARTS
+   ════════════════════════════════════════════════════════════════ */
 const charts = {};
-
 function kill(id) {
   if (charts[id]) { charts[id].destroy(); delete charts[id]; }
 }
 
-/* Shared axis / grid style */
 const AXIS = {
   grid:  { color: '#1c1c2e' },
   ticks: { color: '#4e4e6a' },
 };
 
-/* ================================================================
-   RENDER — progress line chart
-
-   opts:
-     firstHalf  → only the first 50% of each player's games
-     secondHalf → only the last 50%
-   ================================================================ */
 function renderLine(txData, canvasId, opts = {}) {
   kill(canvasId);
   const ctx = document.getElementById(canvasId).getContext('2d');
 
-  const playerEntries = Object.entries(txData);
-  const datasets = playerEntries.map(([name, series], i) => {
+  const datasets = Object.entries(txData).map(([name, series], i) => {
     let data = series;
     if (opts.firstHalf)  data = series.slice(0, Math.ceil(series.length / 2));
     if (opts.secondHalf) data = series.slice(Math.floor(series.length / 2));
     if (!data.length) return null;
-
     return {
       label:           name,
       data:            data.map(d => ({ x: d.game, y: d.balance })),
@@ -518,39 +886,23 @@ function renderLine(txData, canvasId, opts = {}) {
     type: 'line',
     data: { datasets },
     options: {
-      responsive:  true,
-      animation:   { duration: 600 },
+      responsive: true,
+      animation:  { duration: 600 },
       plugins: {
         legend: { labels: { color: '#888', font: { size: 10 }, boxWidth: 12 } },
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y)}`,
-          },
-        },
+        tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${fmt(c.parsed.y)}` } },
       },
       scales: {
-        x: {
-          ...AXIS,
-          type:  'linear',
-          title: { display: true, text: 'Game #', color: '#4e4e6a', font: { size: 10 } },
-        },
-        y: {
-          ...AXIS,
-          ticks: { color: '#4e4e6a', callback: v => fmt(v) },
-        },
+        x: { ...AXIS, type: 'linear', title: { display: true, text: 'Game #', color: '#4e4e6a', font: { size: 10 } } },
+        y: { ...AXIS, ticks: { color: '#4e4e6a', callback: v => fmt(v) } },
       },
     },
   });
 }
 
-/* ================================================================
-   RENDER — horizontal bar chart
-   reversed = true  → backstroke (lowest balance first)
-   ================================================================ */
 function renderBar(players, canvasId, reversed = false) {
   kill(canvasId);
-  const ctx = document.getElementById(canvasId).getContext('2d');
-
+  const ctx    = document.getElementById(canvasId).getContext('2d');
   const sorted = reversed ? [...players].reverse() : [...players];
 
   charts[canvasId] = new Chart(ctx, {
@@ -578,9 +930,7 @@ function renderBar(players, canvasId, reversed = false) {
       animation:  { duration: 600 },
       plugins: {
         legend: { display: false },
-        tooltip: {
-          callbacks: { label: ctx => ` ${fmt(ctx.parsed.x)}` },
-        },
+        tooltip: { callbacks: { label: c => ` ${fmt(c.parsed.x)}` } },
       },
       scales: {
         x: { ...AXIS, ticks: { color: '#4e4e6a', callback: v => fmt(v) } },
@@ -590,9 +940,9 @@ function renderBar(players, canvasId, reversed = false) {
   });
 }
 
-/* ================================================================
-   MAIN — fetch both tabs, parse, render everything
-   ================================================================ */
+/* ════════════════════════════════════════════════════════════════
+   MAIN — fetch, parse, render
+   ════════════════════════════════════════════════════════════════ */
 async function refresh() {
   try {
     const [recRows, txRows] = await Promise.all([
@@ -603,10 +953,11 @@ async function refresh() {
     const players = parseRecords(recRows);
     const txData  = parseTransactions(txRows);
 
+    renderCrucicon(players);
     renderTable(players);
     renderLine(txData, 'chart-full');
-    renderLine(txData, 'chart-midterm',        { firstHalf:  true });
-    renderLine(txData, 'chart-backstroke-line', { secondHalf: true });
+    renderLine(txData, 'chart-midterm',         { firstHalf:  true });
+    renderLine(txData, 'chart-backstroke-line',  { secondHalf: true });
     renderBar(players, 'chart-bar-fwd', false);
     renderBar(players, 'chart-bar-rev', true);
 
