@@ -42,20 +42,46 @@
       backdrop-filter: blur(8px);
     }
 
+    /* Logo animation — glow lives on a pseudo-element so filter never
+       touches the <img>, keeping mix-blend-mode: screen intact         */
     @keyframes logo-float {
-      0%, 100% {
-        transform: translateY(0px);
-        filter: drop-shadow(0 0 8px rgba(201,168,76,0.35)) brightness(1);
-      }
-      50% {
-        transform: translateY(-5px);
-        filter: drop-shadow(0 0 20px rgba(201,168,76,0.75)) brightness(1.06);
-      }
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-5px); }
+    }
+
+    @keyframes logo-glow {
+      0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(0.85); }
+      50%       { opacity: 0.80; transform: translate(-50%, -50%) scale(1.20); }
+    }
+
+    .header-logo-wrap {
+      position: relative;
+      display: inline-block;
+      animation: logo-float 3.2s ease-in-out infinite;
+    }
+
+    /* Glow ring — sits behind the image, completely separate compositing */
+    .header-logo-wrap::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        rgba(201,168,76,0.65) 0%,
+        rgba(201,168,76,0.15) 50%,
+        transparent 72%);
+      animation: logo-glow 3.2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .header-logo {
-      height: 72px; width: auto; mix-blend-mode: screen;
-      animation: logo-float 3.2s ease-in-out infinite;
+      height: 72px; width: auto;
+      mix-blend-mode: screen;  /* no filter here — keeps black bg invisible */
+      position: relative;
+      z-index: 1;
+      display: block;
     }
     .header-center { text-align: center; }
     .header-center h1 {
@@ -378,7 +404,9 @@
 
 <!-- ══════════════════════════════════════════ HEADER -->
 <header>
-  <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
+  <div class="header-logo-wrap">
+    <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
+  </div>
   <div class="header-center">
     <h1>Player Standings</h1>
     <p id="header-subtitle">Golden Aces League</p>
