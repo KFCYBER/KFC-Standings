@@ -45,7 +45,7 @@
     .header-logo {
       height: 72px;
       width: auto;
-      mix-blend-mode: screen; /* makes the black logo background transparent */
+      mix-blend-mode: screen;
     }
 
     .header-center { text-align: center; }
@@ -66,7 +66,6 @@
       text-transform: uppercase;
     }
 
-    /* spacer to balance the logo on the right */
     .header-spacer { width: 72px; }
 
     /* ── CRUCICON BANNER ── */
@@ -138,7 +137,6 @@
       margin-top: 4px;
     }
 
-    /* 5-dot intensity indicator */
     .crucicon-dots {
       display: flex;
       gap: 7px;
@@ -160,7 +158,6 @@
       box-shadow: 0 0 8px var(--crucicon-color, #3bbd6f);
     }
 
-    /* Crucible Regime toggle button */
     .regime-btn {
       background: transparent;
       border: 1px solid var(--crucicon-color, #e04040);
@@ -181,19 +178,13 @@
 
     .regime-btn:hover { background: rgba(255,255,255,0.04); }
 
-    .regime-chevron {
-      font-size: 10px;
-      transition: transform 0.3s;
-    }
-
+    .regime-chevron { font-size: 10px; transition: transform 0.3s; }
     .regime-chevron.open { transform: rotate(180deg); }
 
-    /* Collapsible rules panel */
     #regime-panel {
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.4s ease;
-      border-top: 0px solid var(--border);
     }
 
     #regime-panel.open {
@@ -301,7 +292,7 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      margin-bottom: 40px;
+      margin-bottom: 24px;
     }
 
     /* ── TABLE ── */
@@ -452,9 +443,7 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════
-     HEADER
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════ HEADER -->
 <header>
   <img src="logo.png" alt="Kimmo's Fabulous Casino" class="header-logo" />
   <div class="header-center">
@@ -464,27 +453,18 @@
   <div class="header-spacer"></div>
 </header>
 
-<!-- ═══════════════════════════════════════════════════
-     CRUCICON BANNER — non-dismissable, always visible
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════ CRUCICON BANNER -->
 <div id="crucicon-banner">
   <div class="crucicon-bar">
-
-    <!-- Level badge -->
     <div class="crucicon-badge">
       <span class="crucicon-tag">Crucicon</span>
       <span class="crucicon-num" id="cn-num">—</span>
     </div>
-
     <div class="crucicon-sep"></div>
-
-    <!-- Status text -->
     <div class="crucicon-info">
       <div class="crucicon-status-label" id="cn-status">Loading…</div>
       <div class="crucicon-desc" id="cn-desc"></div>
     </div>
-
-    <!-- 5-dot intensity meter (right-aligned) -->
     <div class="crucicon-dots" id="cn-dots">
       <div class="crucicon-dot" id="dot-1"></div>
       <div class="crucicon-dot" id="dot-2"></div>
@@ -492,16 +472,11 @@
       <div class="crucicon-dot" id="dot-4"></div>
       <div class="crucicon-dot" id="dot-5"></div>
     </div>
-
-    <!-- Crucible Regime toggle — only visible at Crucicon 1 -->
     <button class="regime-btn" id="regime-btn" onclick="toggleRegime()" style="display:none">
       Crucible Regime
       <span class="regime-chevron" id="regime-chevron">▼</span>
     </button>
-
   </div>
-
-  <!-- Collapsible rules panel -->
   <div id="regime-panel">
     <div class="regime-inner">
       <div class="regime-header">Active Contenders</div>
@@ -512,9 +487,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     MAIN CONTENT
-════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════ MAIN -->
 <main>
 
   <!-- STANDINGS TABLE -->
@@ -529,38 +502,38 @@
     </div>
   </div>
 
-  <!-- PROGRESS CHARTS -->
-  <div class="section-label">Season League Progress</div>
+  <!-- SEASON LEAGUE PROGRESS — bar snapshots + line charts all under one label -->
+  <div class="section-label" style="margin-top:16px">Season League Progress</div>
 
-  <div class="chart-grid" style="margin-bottom:20px">
-    <div class="chart-card">
-      <div class="chart-title">Balance Over Time — Full Season</div>
-      <canvas id="chart-full" height="80"></canvas>
-    </div>
-  </div>
-
-  <div class="chart-grid cols-2">
-    <div class="chart-card">
-      <div class="chart-title">Balance Over Time — Midterm</div>
-      <canvas id="chart-midterm" height="120"></canvas>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Balance Over Time — Backstroke</div>
-      <canvas id="chart-backstroke-line" height="120"></canvas>
-    </div>
-  </div>
-
-  <!-- STANDINGS CHARTS -->
-  <div class="section-label" style="margin-top:40px">Current Season League Standings</div>
-
+  <!-- Bar charts: current snapshot (moved directly under standings) -->
   <div class="chart-grid cols-2">
     <div class="chart-card">
       <div class="chart-title">Current Standings</div>
       <canvas id="chart-bar-fwd" height="160"></canvas>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Current Standings — Backstroke</div>
-      <canvas id="chart-bar-rev" height="160"></canvas>
+      <div class="chart-title">Top 3 — Podium</div>
+      <canvas id="chart-top3" height="160"></canvas>
+    </div>
+  </div>
+
+  <!-- Full season log chart -->
+  <div class="chart-grid">
+    <div class="chart-card">
+      <div class="chart-title">Balance Over Time — Full Season (Log · capped at season target)</div>
+      <canvas id="chart-full" height="80"></canvas>
+    </div>
+  </div>
+
+  <!-- Midfield + Backmarkers -->
+  <div class="chart-grid cols-2">
+    <div class="chart-card">
+      <div class="chart-title">Midfield — Balance Over Time</div>
+      <canvas id="chart-midfield" height="120"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Backmarkers — Balance Over Time</div>
+      <canvas id="chart-backmarkers" height="120"></canvas>
     </div>
   </div>
 
@@ -582,8 +555,9 @@ const SEASON = {
 };
 
 /* ════════════════════════════════════════════════════════════════
-   ★  CRUCICON LEVELS — thresholds based on the leader's balance
-      Ordered 5 → 1 (calm → intense)
+   ★  CRUCICON LEVELS — auto-resolved from the leader's balance
+      Ordered 5 → 1 (calm → intense).
+      min/max thresholds also drive the Midfield & Backmarker chart filters.
    ════════════════════════════════════════════════════════════════ */
 const CRUCICON = [
   {
@@ -634,8 +608,18 @@ const CRUCICON = [
 ];
 
 /* ════════════════════════════════════════════════════════════════
-   ★  CRUCIBLE REGIME RULES — shown when Crucicon 1 is active
-      Add, remove or edit lines freely
+   ★  CHART ZONE FILTERS — derived from CRUCICON thresholds.
+      Midfield  = Crucicon 2–3 range  (1M  → 10B)
+      Backmarkers = Crucicon 4–5 range (0   → 1M)
+      Adjust by editing the CRUCICON entries above.
+   ════════════════════════════════════════════════════════════════ */
+const ZONES = {
+  midfield:    { min: CRUCICON.find(l => l.level === 3).min,  max: CRUCICON.find(l => l.level === 1).min  },
+  backmarkers: { min: 0,                                       max: CRUCICON.find(l => l.level === 3).min  },
+};
+
+/* ════════════════════════════════════════════════════════════════
+   ★  CRUCIBLE REGIME RULES — add, remove or edit lines freely
    ════════════════════════════════════════════════════════════════ */
 const CRUCIBLE_RULES = [
   'All contenders must register a minimum of 2 sessions per calendar week.',
@@ -684,7 +668,7 @@ function parseRecords(rows) {
     const rawBal = (row[3] ?? '').trim();
 
     if (!name) continue;
-    if (status !== 'Active') continue; // filters stake table, tax table, etc.
+    if (status !== 'Active') continue;
     if (!rawBal || rawBal === '0' || rawBal === '-' || rawBal.startsWith('#')) continue;
 
     const balance = parseFloat(rawBal.replace(/,/g, ''));
@@ -712,13 +696,13 @@ function parseTransactions(rows) {
 
     const series = [];
     for (let r = 6; r < rows.length; r++) {
-      const row    = rows[r];
+      const row     = rows[r];
       const gameRaw = (row[col + 1] ?? '').trim();
       const balRaw  = (row[col + 7] ?? '').trim();
       if (!gameRaw || !balRaw || balRaw === '-' || balRaw.startsWith('#')) continue;
       const game    = parseInt(gameRaw, 10);
       const balance = parseFloat(balRaw.replace(/,/g, ''));
-      if (!isFinite(game) || !isFinite(balance)) continue;
+      if (!isFinite(game) || !isFinite(balance) || balance <= 0) continue;
       series.push({ game, balance });
     }
     if (series.length > 0) {
@@ -741,11 +725,20 @@ function fmt(n) {
 }
 
 /* ════════════════════════════════════════════════════════════════
+   LOG TICK FORMATTER — only label clean powers of 10
+   ════════════════════════════════════════════════════════════════ */
+function logTick(value) {
+  const log = Math.log10(value);
+  return Number.isInteger(Math.round(log * 10) / 10) && (Math.round(log) === log)
+    ? fmt(value)
+    : '';
+}
+
+/* ════════════════════════════════════════════════════════════════
    CRUCICON — resolve current level from leader's balance
    ════════════════════════════════════════════════════════════════ */
 function resolveCrucicon(leaderBalance) {
-  // Walk from most intense (level 1) to calmest (level 5)
-  const sorted = [...CRUCICON].sort((a, b) => a.level - b.level);
+  const sorted = [...CRUCICON].sort((a, b) => a.level - b.level); // level 1 first
   for (const lvl of sorted) {
     if (leaderBalance >= lvl.min) return lvl;
   }
@@ -759,17 +752,15 @@ function renderCrucicon(players) {
   const leaderBal = players[0]?.balance ?? 0;
   const lvl       = resolveCrucicon(leaderBal);
 
-  // Apply CSS variables to the banner
   const banner = document.getElementById('crucicon-banner');
   banner.style.setProperty('--crucicon-color', lvl.color);
   banner.style.setProperty('--crucicon-bg',    lvl.bg);
 
-  // Level number + text
   document.getElementById('cn-num').textContent    = lvl.level;
   document.getElementById('cn-status').textContent = lvl.status.toUpperCase();
   document.getElementById('cn-desc').textContent   = lvl.desc;
 
-  // Intensity dots: dots lit = 6 - level  (level 1 → 5 dots, level 5 → 1 dot)
+  // Intensity dots: level 1 → 5 lit, level 5 → 1 lit
   const litCount = 6 - lvl.level;
   for (let i = 1; i <= 5; i++) {
     const dot = document.getElementById(`dot-${i}`);
@@ -777,19 +768,14 @@ function renderCrucicon(players) {
     dot.style.setProperty('--crucicon-color', lvl.color);
   }
 
-  // Crucible Regime — only at level 1
   const btn = document.getElementById('regime-btn');
   if (lvl.level === 1) {
     btn.style.display = '';
-
-    // Contenders
     const contenders = players.filter(p => p.balance >= SEASON.CONTENDER_MIN);
     document.getElementById('regime-contenders').innerHTML =
       contenders.length
         ? contenders.map(p => `<span class="contender-chip">${p.name}</span>`).join('')
         : '<span style="color:var(--muted);font-size:12px;letter-spacing:1px">No contenders yet</span>';
-
-    // Rules
     document.getElementById('regime-rules').innerHTML =
       CRUCIBLE_RULES.map((rule, i) => `
         <li class="regime-rule-item">
@@ -803,12 +789,9 @@ function renderCrucicon(players) {
   }
 }
 
-/* Toggle Crucible Regime panel */
 function toggleRegime() {
-  const panel   = document.getElementById('regime-panel');
-  const chevron = document.getElementById('regime-chevron');
-  const isOpen  = panel.classList.toggle('open');
-  chevron.classList.toggle('open', isOpen);
+  document.getElementById('regime-panel').classList.toggle('open');
+  document.getElementById('regime-chevron').classList.toggle('open');
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -822,12 +805,9 @@ function renderTable(players) {
   }
 
   const rankClass = ['gold', 'silver', 'bronze'];
-
   const rows = players.map((p, i) => {
-    const isContender = p.balance >= SEASON.CONTENDER_MIN;
-    const contenderTag = isContender
-      ? '<span class="contender-tag">Contender</span>'
-      : '';
+    const isContender  = p.balance >= SEASON.CONTENDER_MIN;
+    const contenderTag = isContender ? '<span class="contender-tag">Contender</span>' : '';
     return `
       <tr class="${isContender ? 'contender' : ''}">
         <td class="td-rank ${rankClass[i] ?? ''}">#${i + 1}</td>
@@ -857,30 +837,52 @@ function kill(id) {
   if (charts[id]) { charts[id].destroy(); delete charts[id]; }
 }
 
-const AXIS = {
-  grid:  { color: '#1c1c2e' },
-  ticks: { color: '#4e4e6a' },
-};
-
+/* ── Logarithmic line chart ──
+   opts:
+     yMin    — explicit Y axis minimum (default: snap to smallest data point)
+     yMax    — explicit Y axis maximum (default: SEASON.TARGET)
+     filter  — fn(lastBalance) → bool, filters which players appear
+*/
 function renderLine(txData, canvasId, opts = {}) {
   kill(canvasId);
   const ctx = document.getElementById(canvasId).getContext('2d');
 
-  const datasets = Object.entries(txData).map(([name, series], i) => {
-    let data = series;
-    if (opts.firstHalf)  data = series.slice(0, Math.ceil(series.length / 2));
-    if (opts.secondHalf) data = series.slice(Math.floor(series.length / 2));
-    if (!data.length) return null;
-    return {
-      label:           name,
-      data:            data.map(d => ({ x: d.game, y: d.balance })),
-      borderColor:     COLORS[i % COLORS.length],
-      backgroundColor: 'transparent',
-      borderWidth:     2,
-      pointRadius:     3,
-      tension:         0.4,
-    };
-  }).filter(Boolean);
+  let entries = Object.entries(txData);
+
+  // Filter players by their most recent balance
+  if (opts.filter) {
+    entries = entries.filter(([, series]) => {
+      const last = series[series.length - 1]?.balance ?? 0;
+      return opts.filter(last);
+    });
+  }
+
+  // Compute Y range from filtered data
+  let dataMin = Infinity, dataMax = -Infinity;
+  for (const [, series] of entries) {
+    for (const d of series) {
+      if (d.balance > 0) {
+        dataMin = Math.min(dataMin, d.balance);
+        dataMax = Math.max(dataMax, d.balance);
+      }
+    }
+  }
+  if (!isFinite(dataMin)) dataMin = 1;
+  if (!isFinite(dataMax)) dataMax = 1000;
+
+  // Snap to nearest power of 10 below/above
+  const yMin = opts.yMin ?? Math.pow(10, Math.floor(Math.log10(dataMin)));
+  const yMax = opts.yMax ?? Math.pow(10, Math.ceil(Math.log10(dataMax)));
+
+  const datasets = entries.map(([name, series], i) => ({
+    label:           name,
+    data:            series.map(d => ({ x: d.game, y: d.balance })),
+    borderColor:     COLORS[i % COLORS.length],
+    backgroundColor: 'transparent',
+    borderWidth:     2,
+    pointRadius:     3,
+    tension:         0.4,
+  }));
 
   charts[canvasId] = new Chart(ctx, {
     type: 'line',
@@ -893,33 +895,41 @@ function renderLine(txData, canvasId, opts = {}) {
         tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${fmt(c.parsed.y)}` } },
       },
       scales: {
-        x: { ...AXIS, type: 'linear', title: { display: true, text: 'Game #', color: '#4e4e6a', font: { size: 10 } } },
-        y: { ...AXIS, ticks: { color: '#4e4e6a', callback: v => fmt(v) } },
+        x: {
+          type:  'linear',
+          grid:  { color: '#1c1c2e' },
+          ticks: { color: '#4e4e6a' },
+          title: { display: true, text: 'Game #', color: '#4e4e6a', font: { size: 10 } },
+        },
+        y: {
+          type: 'logarithmic',
+          min:  yMin,
+          max:  yMax,
+          grid: { color: '#1c1c2e' },
+          ticks: {
+            color:    '#4e4e6a',
+            callback: logTick,
+          },
+        },
       },
     },
   });
 }
 
-function renderBar(players, canvasId, reversed = false) {
+/* ── Horizontal bar chart ── */
+function renderBar(players, canvasId) {
   kill(canvasId);
-  const ctx    = document.getElementById(canvasId).getContext('2d');
-  const sorted = reversed ? [...players].reverse() : [...players];
+  const ctx = document.getElementById(canvasId).getContext('2d');
 
   charts[canvasId] = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: sorted.map(p => p.name),
+      labels: players.map(p => p.name),
       datasets: [{
         label: 'Balance',
-        data:  sorted.map(p => p.balance),
-        backgroundColor: sorted.map((_, i) => {
-          const ci = reversed ? players.length - 1 - i : i;
-          return COLORS[ci % COLORS.length] + 'BB';
-        }),
-        borderColor: sorted.map((_, i) => {
-          const ci = reversed ? players.length - 1 - i : i;
-          return COLORS[ci % COLORS.length];
-        }),
+        data:  players.map(p => p.balance),
+        backgroundColor: players.map((_, i) => COLORS[i % COLORS.length] + 'BB'),
+        borderColor:     players.map((_, i) => COLORS[i % COLORS.length]),
         borderWidth:  1,
         borderRadius: 4,
       }],
@@ -933,8 +943,14 @@ function renderBar(players, canvasId, reversed = false) {
         tooltip: { callbacks: { label: c => ` ${fmt(c.parsed.x)}` } },
       },
       scales: {
-        x: { ...AXIS, ticks: { color: '#4e4e6a', callback: v => fmt(v) } },
-        y: { ...AXIS, ticks: { color: '#ccc', font: { size: 11 } } },
+        x: {
+          grid:  { color: '#1c1c2e' },
+          ticks: { color: '#4e4e6a', callback: v => fmt(v) },
+        },
+        y: {
+          grid:  { color: '#1c1c2e' },
+          ticks: { color: '#ccc', font: { size: 11 } },
+        },
       },
     },
   });
@@ -953,13 +969,31 @@ async function refresh() {
     const players = parseRecords(recRows);
     const txData  = parseTransactions(txRows);
 
+    // Banner
     renderCrucicon(players);
+
+    // Standings table
     renderTable(players);
-    renderLine(txData, 'chart-full');
-    renderLine(txData, 'chart-midterm',         { firstHalf:  true });
-    renderLine(txData, 'chart-backstroke-line',  { secondHalf: true });
-    renderBar(players, 'chart-bar-fwd', false);
-    renderBar(players, 'chart-bar-rev', true);
+
+    // Bar charts — current snapshot + top 3 podium
+    renderBar(players,          'chart-bar-fwd');
+    renderBar(players.slice(0, 3), 'chart-top3');
+
+    // Full season — all players, log scale capped at SEASON.TARGET
+    renderLine(txData, 'chart-full', {
+      yMin: 1,
+      yMax: SEASON.TARGET,
+    });
+
+    // Midfield — players whose latest balance falls in the midfield zone
+    renderLine(txData, 'chart-midfield', {
+      filter: bal => bal >= ZONES.midfield.min && bal < ZONES.midfield.max,
+    });
+
+    // Backmarkers — players whose latest balance falls in the backmarker zone
+    renderLine(txData, 'chart-backmarkers', {
+      filter: bal => bal >= ZONES.backmarkers.min && bal < ZONES.backmarkers.max,
+    });
 
     document.getElementById('update-ts').textContent =
       `Live · last updated ${new Date().toLocaleTimeString()}`;
