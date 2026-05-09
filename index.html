@@ -513,7 +513,7 @@ const SEASON = {
   TARGET_LABEL:  '250B',
   CONTENDER_MIN: 10_000_000_000,
   START:         new Date('2026-04-25'),  // ★ Metadata only — NOT used in any display calculation
-  END:           new Date('2026-05-13'),  // ★ THIS is the only variable that controls "X days remaining" in the header
+  END:           new Date('2026-12-31'),  // ★ THIS is the only variable that controls "X days remaining" in the header
 };
 
 /* ════════════════════════════════════════════════════════
@@ -609,6 +609,7 @@ function parseRecords(rows) {
     const rawBal = (row[3] ?? '').trim();
 
     if (!name || status !== 'Active') continue;
+    if (name.toLowerCase() === 'creator') continue;
     if (!rawBal || rawBal === '0' || rawBal === '-' || rawBal.startsWith('#')) continue;
 
     const balance = parseFloat(rawBal.replace(/,/g, ''));
@@ -638,7 +639,7 @@ function parseTransactions(rows) {
 
   for (let col = 1; col < nameRow.length; col += BLOCK) {
     const name = (nameRow[col] ?? '').trim();
-    if (!name) continue;
+    if (!name || name.toLowerCase() === 'creator') continue;
 
     const series = [];
     for (let r = 6; r < rows.length; r++) {
