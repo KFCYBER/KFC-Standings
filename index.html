@@ -364,48 +364,71 @@
     canvas { max-width: 100%; display: block; }
 
     @media (max-width: 800px) {
-      /* ── Header ── */
+      /* ── Header: center logo + title together (spacer hidden removes the balance weight) ── */
       header {
+        justify-content: center;
+        gap: 12px;
         padding: 10px 14px;
-        gap: 10px;
       }
       .header-logo { height: 40px; }
+      .header-spacer { display: none; }
       .header-center h1 { font-size: 14px; letter-spacing: 3px; }
       .header-center p  { font-size: 9px; letter-spacing: 2px; }
-      /* Remove the spacer so the title can actually center */
-      .header-spacer { display: none; }
 
       /* ── Crucicon banner ── */
       .crucicon-bar { padding: 10px 14px; gap: 10px; flex-wrap: wrap; }
+      /* Vertical separator is meaningless when items wrap */
+      .crucicon-sep { display: none; }
       .crucicon-num { font-size: 26px; }
       .crucicon-status-label { font-size: 11px; letter-spacing: 2px; }
+      .crucicon-desc { font-size: 9px; }
+      .crucicon-trigger { font-size: 9px; }
       .season-progress-wrap { padding: 0 14px 10px; }
+      /* Leader label can be very long — clip it so it never collides with target label */
+      #season-leader-lbl {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 55%;
+        display: inline-block;
+      }
       .regime-btn { font-size: 8px; padding: 6px 10px; }
       .regime-inner { padding: 14px 14px 18px; }
+      .regime-rule-item { font-size: 11px; gap: 10px; }
 
       /* ── Main layout ── */
       main { padding: 18px 12px 48px; }
       .section-label { font-size: 9px; letter-spacing: 3px; margin-bottom: 12px; }
 
       /* ── Table ── */
-      /* Wrap table in horizontal scroll so it never forces page-wide overflow */
-      .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      th, td { padding: 10px 12px; }
-      .td-rank  { width: 36px; font-size: 10px; }
-      .td-player { font-size: 13px; gap: 6px; }
-      .td-balance { font-size: 12px; }
+      /* Fixed layout: prevents player column expanding to overflow the viewport */
+      .card table { table-layout: fixed; width: 100%; }
+      th, td { padding: 10px 10px; }
+      .td-rank   { width: 38px; font-size: 10px; }
+      /* Player cell: block+nowrap so text-overflow: ellipsis works on long names */
+      .td-player {
+        display: block;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      /* Balance: fixed width + no wrapping so figures never break mid-number */
+      .td-balance {
+        width: 88px;
+        font-size: 11px;
+        white-space: nowrap;
+      }
       .td-session { display: none; }
       .status-bar { padding: 10px 14px; font-size: 9px; flex-wrap: wrap; gap: 6px; }
 
-      /* ── Charts — THE KEY FIXES ── */
-      /* 1. Force grid cells to shrink (default min-width is min-content, causing overflow) */
+      /* ── Charts ── */
       .chart-grid         { gap: 14px; margin-bottom: 14px; min-width: 0; }
       .chart-grid.cols-2  { grid-template-columns: 1fr; }
-      /* 2. Card must clip and constrain the canvas */
       .chart-card {
         padding: 16px;
-        min-width: 0;       /* allow grid cell to shrink */
-        overflow: hidden;   /* clip any canvas that renders slightly wide */
+        min-width: 0;
+        overflow: hidden;
       }
       .chart-title { font-size: 8px; letter-spacing: 2px; margin-bottom: 14px; }
 
@@ -426,7 +449,8 @@
       .header-center h1 { font-size: 12px; letter-spacing: 2px; }
       .crucicon-num { font-size: 20px; }
       main { padding: 14px 8px 40px; }
-      th, td { padding: 8px 8px; }
+      th, td { padding: 8px 6px; }
+      .td-balance { width: 76px; font-size: 10px; }
       .chart-card { padding: 12px; }
     }
   </style>
