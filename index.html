@@ -359,14 +359,75 @@
     footer span { color: var(--gold); }
 
     /* ── RESPONSIVE ── */
+
+    /* Global: canvases must never exceed their container */
+    canvas { max-width: 100%; display: block; }
+
     @media (max-width: 800px) {
-      header { padding: 14px 20px; }
-      .header-logo { height: 52px; }
-      .header-center h1 { font-size: 17px; letter-spacing: 4px; }
-      .chart-grid.cols-2 { grid-template-columns: 1fr; }
-      main { padding: 28px 14px 48px; }
-      .crucicon-bar { flex-wrap: wrap; gap: 12px; }
+      /* ── Header ── */
+      header {
+        padding: 10px 14px;
+        gap: 10px;
+      }
+      .header-logo { height: 40px; }
+      .header-center h1 { font-size: 14px; letter-spacing: 3px; }
+      .header-center p  { font-size: 9px; letter-spacing: 2px; }
+      /* Remove the spacer so the title can actually center */
+      .header-spacer { display: none; }
+
+      /* ── Crucicon banner ── */
+      .crucicon-bar { padding: 10px 14px; gap: 10px; flex-wrap: wrap; }
+      .crucicon-num { font-size: 26px; }
+      .crucicon-status-label { font-size: 11px; letter-spacing: 2px; }
+      .season-progress-wrap { padding: 0 14px 10px; }
+      .regime-btn { font-size: 8px; padding: 6px 10px; }
+      .regime-inner { padding: 14px 14px 18px; }
+
+      /* ── Main layout ── */
+      main { padding: 18px 12px 48px; }
+      .section-label { font-size: 9px; letter-spacing: 3px; margin-bottom: 12px; }
+
+      /* ── Table ── */
+      /* Wrap table in horizontal scroll so it never forces page-wide overflow */
+      .card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      th, td { padding: 10px 12px; }
+      .td-rank  { width: 36px; font-size: 10px; }
+      .td-player { font-size: 13px; gap: 6px; }
+      .td-balance { font-size: 12px; }
       .td-session { display: none; }
+      .status-bar { padding: 10px 14px; font-size: 9px; flex-wrap: wrap; gap: 6px; }
+
+      /* ── Charts — THE KEY FIXES ── */
+      /* 1. Force grid cells to shrink (default min-width is min-content, causing overflow) */
+      .chart-grid         { gap: 14px; margin-bottom: 14px; min-width: 0; }
+      .chart-grid.cols-2  { grid-template-columns: 1fr; }
+      /* 2. Card must clip and constrain the canvas */
+      .chart-card {
+        padding: 16px;
+        min-width: 0;       /* allow grid cell to shrink */
+        overflow: hidden;   /* clip any canvas that renders slightly wide */
+      }
+      .chart-title { font-size: 8px; letter-spacing: 2px; margin-bottom: 14px; }
+
+      /* ── Tax grid ── */
+      .tax-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 28px; }
+      .tax-card { padding: 14px 16px; }
+
+      /* ── Skeleton ── */
+      .skeleton-row { padding: 12px 14px; }
+      .skel-sess { display: none; }
+
+      /* ── Footer ── */
+      footer { font-size: 9px; padding: 18px 14px; }
+    }
+
+    /* Extra small — phones under 400px */
+    @media (max-width: 400px) {
+      .header-center h1 { font-size: 12px; letter-spacing: 2px; }
+      .crucicon-num { font-size: 20px; }
+      main { padding: 14px 8px 40px; }
+      th, td { padding: 8px 8px; }
+      .chart-card { padding: 12px; }
     }
   </style>
 </head>
